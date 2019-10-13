@@ -20,6 +20,9 @@ class Order extends Model
         'orderNo','total','meta'
     ];
 
+    protected $appends=[
+        'status'
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

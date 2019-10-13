@@ -53,10 +53,22 @@ export default{
           }
       }
     },
+    computed:{
+        unfinishedOrders(){
+            return this.orders.data.filter((order)=>{
+
+                return JSON.parse(order.status) !== 5
+            })
+
+        }
+    },
     created(){
 //      this.pushCreateStatus()
+        //监听广播时间
+        this.listenStatusUpdated()
     },
     methods:{
+
         pushCreateStatus(){
             this.orders.data.forEach((order)=>{
                 order.statuses.push({
@@ -64,6 +76,28 @@ export default{
                     created_at: order.created_at
                 })
             })
+        },
+        listenStatusUpdated(){
+            //监听每一个订单
+            this.unfinishedOrders.forEach((order)=>{
+//                console.log()
+                //监听频道
+                window.Echo.private(`Order.${order.id}`)
+                //监听事件
+                        .listen('OrderStatusUpdated',(e)=>{
+                            this.updateStatus(e)
+                        })
+            })
+
+
+
+        },
+        updateStatus(order){
+            let i = this.orders.data.findIndex((o)=>{
+                        return o.id == order.id
+                    })
+            this.orders.data[i].statuses.unshift(order.status)
+            this.$forceUpdate()
         },
         cnStatus(key){
             return this.statuses[key]

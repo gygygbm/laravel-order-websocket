@@ -26,6 +26,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 Vue.component('order-list', require('./components/OrderList.vue').default);
 Vue.component('status-steps', require('./components/StatusSteps.vue').default);
+Vue.component('notification', require('./components/notification.vue').default);
 
 
 /**

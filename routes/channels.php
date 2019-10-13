@@ -11,6 +11,10 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
+Broadcast::channel('User.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
+});
+Broadcast::channel('Order.{order}', function ($user,\App\Order $order) {
+    $id=$order->user_id;
     return (int) $user->id === (int) $id;
 });

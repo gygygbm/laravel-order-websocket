@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderStatusUpdated;
 use App\Order;
 use App\User;
 use Illuminate\Http\Request;
@@ -33,6 +34,7 @@ class OrdersController extends Controller
     public function update(Request $request,Order $order)
     {
         $order->setStatus($request->status);
+        event(new OrderStatusUpdated($order));
 //        return back();
     }
 
