@@ -25,7 +25,11 @@
                             <td>{{ $order->total }}</td>
                             <td>{{ $order->created_at }}</td>
                             <td>{{ $order->cnStatus }}</td>
-                            <td>@include('orders._status')</td>
+                            <td><status-steps
+                                        :statuses="{{ json_encode($statuses) }}"
+                                        :status="{{ json_encode((int)$order->status) }}"
+                                        :order="{{ json_encode($order) }}"
+                                ></status-steps></td>
                         </tr>
                     @endforeach
                </tbody>

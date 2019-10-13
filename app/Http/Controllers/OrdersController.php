@@ -16,9 +16,9 @@ class OrdersController extends Controller
     public function index(User $user)
     {
         //
-        $orders=$user->orders()->paginate(12);
-
-        return view('orders.index',compact('orders'));
+        $orders=$user->orders()->with('statuses')->paginate(12);
+        $statuses=Order::statuses;
+        return view('orders.index',compact('orders','statuses'));
     }
 
     public function admin()
@@ -33,7 +33,7 @@ class OrdersController extends Controller
     public function update(Request $request,Order $order)
     {
         $order->setStatus($request->status);
-        return back();
+//        return back();
     }
 
 

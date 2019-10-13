@@ -10,10 +10,11 @@ class Order extends Model
     use HasStatuses;
     //
     const statuses=[
-        1=>'接单',
-        2=>'发货',
-        3=>'运送中',
-        4=>'已送达'
+        1=>'下单',
+        2=>'接单',
+        3=>'发货',
+        4=>'运送中',
+        5=>'已送达'
     ];
     protected $fillable=[
         'orderNo','total','meta'

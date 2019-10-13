@@ -16,6 +16,18 @@
 
             <div class="card-body">
 
+                <el-timeline>
+                    <el-timeline-item
+                            v-for="(status, index) in order.statuses"
+                            :key="index"
+                            :timestamp="status.created_at">
+                        {{ cnStatus(status.name) }}
+                        <br>
+                        <small class="text-muted">
+                            {{ cnReason(status.name) }}
+                        </small>
+                    </el-timeline-item>
+                </el-timeline>
             </div>
         </div>
     </div>
@@ -27,7 +39,38 @@
 export default{
     props:{
         orders : Object,
-        user : Object
+        user : Object,
+        statuses : Object
+    },
+    data(){
+      return {
+          reasons:{
+              1:"用户已下单并支付",
+              2:"卖家已接单，请耐心等待～",
+              3:"卖家已发货，正在等待运送",
+              4:"骑手已取货，正在运送中",
+              5:"已送达，订单完成"
+          }
+      }
+    },
+    created(){
+//      this.pushCreateStatus()
+    },
+    methods:{
+        pushCreateStatus(){
+            this.orders.data.forEach((order)=>{
+                order.statuses.push({
+                    name : 0,
+                    created_at: order.created_at
+                })
+            })
+        },
+        cnStatus(key){
+            return this.statuses[key]
+        },
+        cnReason(key){
+            return this.reasons[key]
+        }
     }
 }
 

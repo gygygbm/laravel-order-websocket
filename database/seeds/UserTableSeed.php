@@ -24,6 +24,9 @@ class UserTableSeed extends Seeder
             $user->orders()->saveMany($orders);
 
         });
+        \App\Order::all()->each(function($order){
+            $order->setStatus(1);
+        });
 
 
     }
