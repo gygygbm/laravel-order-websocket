@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\OrderStatusUpdated;
+use App\Notifications\OrderStatusChanged;
 use App\Order;
 use App\User;
 use Illuminate\Http\Request;
@@ -35,6 +36,9 @@ class OrdersController extends Controller
     {
         $order->setStatus($request->status);
         event(new OrderStatusUpdated($order));
+
+        //发送通知
+        $order->user->notify(new OrderStatusChanged($order));
 //        return back();
     }
 

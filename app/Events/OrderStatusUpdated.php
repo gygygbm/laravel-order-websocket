@@ -37,10 +37,11 @@ class OrderStatusUpdated implements ShouldBroadcast
     public function broadcastOn()
     {
         //广播多个频道
-        return [
-            new PrivateChannel('Order.'.$this->order->id),
-            new PrivateChannel('User.'.$this->order->user_id)
-        ];
+//        return [
+//            new PrivateChannel('Order.'.$this->order->id),
+////            new PrivateChannel('User.'.$this->order->user_id)
+//        ];
+        return new PrivateChannel('Order.'.$this->order->id);
     }
 
     /**
